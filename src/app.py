@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User,Character,Planet,Favorite
 #from models import Person
 
 app = Flask(__name__)
@@ -41,6 +41,19 @@ def handle_hello():
 
     response_body = {
         "msg": "Hello, this is your GET /user response "
+    }
+
+    return jsonify(response_body), 200
+
+@app.route('/user', methods=['POST'])
+def create_user():
+    data =  request.json
+    user1 = User(user_name=data["username"], password=data["password"])
+    db.session.add(user1)
+    db.session.commit()
+
+    response_body = {
+        "msg": f"Successfuly created,{data['username']}"
     }
 
     return jsonify(response_body), 200
