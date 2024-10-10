@@ -41,10 +41,7 @@ class Character(db.Model):
             "gender": self.gender,
             "height": self.height,
             "mass": self.mass,
-            "name": self.name,
-            "skin_color": self.skin_color,
-            "created": self.created,
-            "edited": self.edited,
+            "name": self.name
             # do not serialize the password, its a security breach
         }    
 
@@ -76,7 +73,6 @@ class Planet(db.Model):
 
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name   = db.Column(db.String(100), nullable=False) 
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     user =  db.relationship(User)
     character_id = db.Column(db.Integer, db.ForeignKey(Character.id))
@@ -88,9 +84,14 @@ class Favorite(db.Model):
         return '<Favorite %r>' % self.name
 
     def serialize(self):
+        user = User.query.get([self.user_id])
+        if(self.character_id):
+            entity =  Character.query.filter_by(id=self.character_id).first()
+        elif(self.planet_id):
+            entity = Planet.query.filter_by(id=self.planet_id).first()
         return {
-            "id": self.id,
-            "name": self.name,
-            # do not serialize the password, its a security breach
+           "id": self.id,
+           "user":user.serialize()["user_name"],
+           "name":entity.serialize()["name"]  
         } 
    
