@@ -89,9 +89,8 @@ class Favorite(db.Model):
             entity =  Character.query.filter_by(id=self.character_id).first()
         elif(self.planet_id):
             entity = Planet.query.filter_by(id=self.planet_id).first()
-        return {
-           "id": self.id,
-           "user":user.serialize()["user_name"],
-           "name":entity.serialize()["name"]  
-        } 
+        fav=entity.serialize()
+        fav["id"]=self.id  
+        fav["user"] = user.serialize()["user_name"]    
+        return fav
    
