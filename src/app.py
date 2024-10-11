@@ -154,7 +154,8 @@ def create_planet():
                                                     "category":"character" or "planet",
                                                     "entity_id":1,
                                                     "user_id":1
-                                                }"""
+                                                }
+"""
 @app.route('/favorite', methods=['POST'])
 def create_favorite():
     data =  request.json
