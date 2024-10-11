@@ -84,6 +84,16 @@ def delete_user(id):
     }
     return jsonify(response_body), 200
 
+
+@app.route('/characters', methods=['GET'])
+def get_characters():
+    characters = Character.query.all()
+    characters = list(map(lambda x: x.serialize(), characters))
+    response_body = {
+    "characters":characters
+    }
+
+    return jsonify(response_body), 200
 """Use this on the fronted character creation {
                                                 "birth_year":"N/A",
                                                 "eye_color":"green",
@@ -93,7 +103,6 @@ def delete_user(id):
                                                 "name":"Luke Skywalker"
                                             }
 """
-
 @app.route('/character', methods=['POST'])
 def create_character():
     data =  request.json
@@ -104,6 +113,17 @@ def create_character():
     characters = list(map(lambda x: x.serialize(), characters))
     response_body = {
     "characters":characters
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/planets', methods=['GET'])
+def get_planets():
+    planets = Planet.query.all()
+    planets = list(map(lambda x: x.serialize(), planets))
+    response_body = {
+    "planets":planets
     }
 
     return jsonify(response_body), 200
@@ -130,7 +150,7 @@ def create_planet():
     }
 
     return jsonify(response_body), 200
-""" use this on the favorite creation   {
+""" use this on the fronted favorite creation   {
                                             "category":"character" or "planet",
                                             "entity_id":1,
                                             "user_id":1
@@ -174,7 +194,7 @@ def get_favoriteByUser(id):
     }
     return jsonify(response_body), 200
 
-@app.route('/favorite', methods=['GET'])
+@app.route('/favorites', methods=['GET'])
 def get_favorite():
     favorites = Favorite.query.all()
     favorites = list(map(lambda x: x.serialize(), favorites))
