@@ -151,10 +151,10 @@ def create_planet():
 
     return jsonify(response_body), 200
 """ use this on the fronted favorite creation   {
-                                            "category":"character" or "planet",
-                                            "entity_id":1,
-                                            "user_id":1
-                                        }"""
+                                                    "category":"character" or "planet",
+                                                    "entity_id":1,
+                                                    "user_id":1
+                                                }"""
 @app.route('/favorite', methods=['POST'])
 def create_favorite():
     data =  request.json
